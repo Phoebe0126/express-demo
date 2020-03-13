@@ -20,6 +20,21 @@ router.get('/', (req, res) => {
 router.get('/students/new', (req, res) => {
     res.render('new.html')
 })
+//进入搜索展示的界面
+router.get('/students/search', (req, res) => {
+    let name = req.query.search // 得到搜索词
+    Student.findByName(name, (err, student) => {
+        if (err) {
+            return res.status(500).send('server err')
+        } else {
+            res.render('edit.html', {
+                student: student
+            })
+        }
+        
+    })
+})
+
 //进入编辑页面
 router.get('/students/edit', (req, res) => {
     let id = req.query.id

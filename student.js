@@ -67,6 +67,33 @@ exports.findById = (id, callback) =>{
         callback(null, ret)
     })
 }
+
+
+/**
+ * 根据 id 获取学生信息对象
+ * @param  {Number}   name       学生 姓名
+ * @param  {Function} callback 回调函数
+ */
+exports.findByName = (name, callback) =>{
+    fs.readFile(dbPath, (err, data) => {
+        if (err) {
+            return callback(err)
+        }
+        let students = JSON.parse(data).students
+        let ret = students.find((item) => {
+            return item.name === name
+        })
+        console.log(ret)
+     
+       // ret.gender = ret.gender? '女' : '男'
+        if (ret) {
+            callback(null, ret)
+        }
+        return callback({err: 'err'})
+        
+    })
+}
+
 /**
  * 根据id修改文件里的学生信息
  * @param {Object}   student     要修改成的学生对象信息
